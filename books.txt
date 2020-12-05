@@ -1,0 +1,11 @@
+10
+Barack Obama,A Promised Land,2020,Crown,1524763160
+Steve Doocy,The Happy in a Hurry Cookbook: 100-Plus Fast and Easy New Recipes That Taste Like Home,2020,William Morrow Cookbooks,0062968394
+Snoop Dogg,From Crook to Cook: Platinum Recipes from Tha Boss Dogg's Kitchen,2018,Chronicle Books,1452179611
+Ernest Cline,Ready Player Two: A Novel,2020,Ballantine Books,1524761338
+Jeff Kinney,The Deep End,2020,Harry N. Abrams,1419748688
+Matthew McConaughey,Greenlights,2020,Crown,0593139135
+Dav Pilkey,Dog Man: Grime and Punishment: From the Creator of Captain Underpants,2020,Graphix,1338535625
+Michelle Obama,Becoming,2018,Crown,1524763136
+Dr. Seuss,How the Grinch Stole Christmas!,1957,Random House Books for Young Readers,0394800796
+Nicholas Sparks,The Return,2020,Grand Central Publishing,1538728575
