@@ -8,10 +8,18 @@
 #include <ostream>
 #include "Node.hpp"
 
+/**
+ * @brief Класс для прохождения по списку
+ * @tparam T Класс для которого создавался список
+ */
 template<class T>
 class Iterator {
   public:
-    Iterator(Node<T> *nodes = nullptr) : nodes_(nodes) {}
+    /**
+     * @brief Создаёт итератор для прохождения по списку
+     * @param nodes Указатель на один из элементов списка, который будет итерироваться
+     */
+    explicit Iterator(Node<T> *nodes = nullptr) : nodes_(nodes) {}
 
     ~Iterator() {
         if (nodes_ == nullptr) {
@@ -19,6 +27,10 @@ class Iterator {
         }
     }
 
+    /**
+     * @brief Сделать шаг вперед в списке
+     * @return Указатель на следующий элемент списка или nullptr, если список пуст
+     */
     Node<T> *StepForward() {
         if (nodes_ == nullptr) {
             return nullptr;
@@ -28,6 +40,10 @@ class Iterator {
         return nodes_;
     }
 
+    /**
+     * @brief Сделать шаг назад в списке
+     * @return Указатель на следующий элемент списка или nullptr, если список пуст
+     */
     Node<T> StepBackward() {
         if (nodes_ == nullptr) {
             return nullptr;
@@ -38,6 +54,9 @@ class Iterator {
     }
 
   private:
+    /**
+     * @brief Указатель на текущий элемент в списке
+     */
     Node<T> *nodes_;
 };
 

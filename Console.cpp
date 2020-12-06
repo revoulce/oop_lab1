@@ -139,7 +139,7 @@ void Console::UserInteraction() {
                 break;
             case 7:
                 ClearScreen();
-                IssueABook();
+                IssueBook();
                 break;
             case 8:
                 ClearScreen();
@@ -172,7 +172,7 @@ bool Console::CheckUserWish(std::string &string_to_output) {
     return true;
 }
 
-bool Console::IsLibraryEmpty() {
+bool Console::DoesLibraryExist() {
     if (library_ == nullptr) {
         std::cerr
             << "Библиотека не была создана. Проверьте наличие файлов в той же папке, что и программа, а так же их правильность."
@@ -198,7 +198,7 @@ void Console::PrintMenu() {
 }
 
 void Console::PrintBooks() {
-    if (IsLibraryEmpty()) {
+    if (DoesLibraryExist()) {
         return;
     }
 
@@ -219,7 +219,7 @@ void Console::PrintBooks() {
 }
 
 void Console::PrintReaders() {
-    if (IsLibraryEmpty()) {
+    if (DoesLibraryExist()) {
         return;
     }
 
@@ -334,7 +334,7 @@ Reader *Console::InputReader() {
 }
 
 void Console::AddBooks() {
-    if (IsLibraryEmpty()) {
+    if (DoesLibraryExist()) {
         return;
     }
 
@@ -344,12 +344,12 @@ void Console::AddBooks() {
         auto *book = InputBook();
         library_->AddBook(*book);
         ClearScreen();
-        std::cout << "Успех!" << std::endl << std::endl;
+        std::cout << "Успех! Книга была добавлена в список." << std::endl << std::endl;
     }
 }
 
 void Console::AddReaders() {
-    if (IsLibraryEmpty()) {
+    if (DoesLibraryExist()) {
         return;
     }
 
@@ -359,12 +359,12 @@ void Console::AddReaders() {
         auto *reader = InputReader();
         library_->AddReader(*reader);
         ClearScreen();
-        std::cout << "Успех!" << std::endl << std::endl;
+        std::cout << "Успех! Читатель был добавлен в список." << std::endl << std::endl;
     }
 }
 
 void Console::DeleteBooks() {
-    if (IsLibraryEmpty()) {
+    if (DoesLibraryExist()) {
         return;
     }
 
@@ -372,7 +372,12 @@ void Console::DeleteBooks() {
     std::string string_to_ensure_delete_all = "Вы уверены что хотите удалить всех читателей? Y/n";
 
     if (CheckUserWish(string_to_ensure_delete_all)) {
-        library_->RemoveBooks();
+        if (library_->RemoveBooks()) {
+            return;
+        }
+
+        std::cout
+            << "Не удалось удалить книги из-за того что некоторые из них не возвращены. Верните книги и попытайтесь снова.";
         return;
     }
 
@@ -383,16 +388,18 @@ void Console::DeleteBooks() {
             ClearScreen();
 
             if (library_->RemoveBook(*find_book)) {
-                std::cout << "Успех!" << std::endl;
+                std::cout << "Успех! Книга была удалена." << std::endl;
             } else {
-                std::cout << "Провал!" << std::endl;
+                std::cout
+                    << "Провал! Книга не была удалена по причине: её не существует уже или она была выдана кому-то. Верните книгу или выберите другую."
+                    << std::endl;
             }
         }
     }
 }
 
 void Console::DeleteReaders() {
-    if (IsLibraryEmpty()) {
+    if (DoesLibraryExist()) {
         return;
     }
 
@@ -400,7 +407,12 @@ void Console::DeleteReaders() {
     std::string string_to_ensure_delete_all = "Вы уверены что хотите удалить всех читателей? Y/n";
 
     if (CheckUserWish(string_to_ensure_delete_all)) {
-        library_->RemoveReaders();
+        if (library_->RemoveReaders()) {
+            return;
+        }
+
+        std::cout
+            << "Не удалось удалить читателей из-за того что некоторые из них не вернули книги. Помогите им вернуть книги и тогда Вы сможете удалить их всех.";
         return;
     }
 
@@ -411,9 +423,11 @@ void Console::DeleteReaders() {
             ClearScreen();
 
             if (library_->RemoveReader(*find_reader)) {
-                std::cout << "Успех!" << std::endl;
+                std::cout << "Успех! Читатель был удалён." << std::endl;
             } else {
-                std::cout << "Провал!" << std::endl;
+                std::cout
+                    << "Провал! Читатель не был удалён по причине: его не существует или он владеет книгой. Верните книгу или выберите другого."
+                    << std::endl;
             }
         }
     }
@@ -533,8 +547,8 @@ Reader *Console::ChooseReader() {
     }
 }
 
-void Console::IssueABook() {
-    if (IsLibraryEmpty()) {
+void Console::IssueBook() {
+    if (DoesLibraryExist()) {
         return;
     }
 
@@ -555,7 +569,7 @@ void Console::IssueABook() {
 }
 
 void Console::ReturnABook() {
-    if (IsLibraryEmpty()) {
+    if (DoesLibraryExist()) {
         return;
     }
 

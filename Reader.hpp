@@ -13,18 +13,48 @@ class Reader {
 
     ~Reader() = default;
 
+    /**
+     * @brief Получение ID читателя
+     * @return ID читателя
+     */
     [[nodiscard]] int GetRid() const;
 
+    /**
+     * @brief Получение ID выданной книги
+     * @return ID книги
+     */
     [[nodiscard]] int GetBid() const;
 
+    /**
+     * @brief Установка ID выданной книги
+     * @param bid ID книги
+     */
     void SetBid(int bid);
 
+    /**
+     * @brief Оператор равенства
+     * @param reader Читатель для сравнения
+     * @return Истина, если равны, ложь, если не равны
+     */
     bool operator==(const Reader &reader);
 
+    /**
+     * @brief Оператор вывода на экран
+     * @param os Поток для вывода
+     * @param reader Книга для вывода
+     * @return Поток с выводом
+     */
     friend std::ostream &operator<<(std::ostream &os, const Reader &reader);
 
   private:
+    /**
+     * @brief ID читателя
+     */
     int rid_;
+
+    /**
+     * @brief ID выданной книги
+     */
     int bid_;
 };
 

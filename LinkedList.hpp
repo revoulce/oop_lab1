@@ -16,6 +16,10 @@ class LinkedList {
         tail_ = new Node<T>();
     }
 
+    /**
+     * @brief Конструктор копирования
+     * @param other_list Список для копирования
+     */
     LinkedList(const LinkedList<T> &other_list) {
         if (other_list.IsEmpty()) {
             head_ = new Node<T>();
@@ -45,10 +49,18 @@ class LinkedList {
         delete tail_;
     }
 
+    /**
+     * @brief Проверка списка на пустоту
+     * @return Истина, если список не пуст, ложь, если список пуст
+     */
     [[nodiscard]] bool IsEmpty() const {
         return head_->next == nullptr;
     }
 
+    /**
+     * @brief Получение размера списка
+     * @return Размер списка
+     */
     [[nodiscard]] int Size() const {
         if (IsEmpty()) {
             return 0;
@@ -65,6 +77,10 @@ class LinkedList {
         return count;
     }
 
+    /**
+     * @brief Добавление элемента в конец списка
+     * @param data Данные для добавления
+     */
     void PushFront(T &data) {
         if (IsEmpty()) {
             Node<T> *node = new Node<T>(data);
@@ -79,6 +95,10 @@ class LinkedList {
         head_->prev = node;
     }
 
+    /**
+     * @brief Добавление элемента в начало списка
+     * @param data Данные для добавления
+     */
     void PushBack(T &data) {
         if (IsEmpty()) {
             auto *node = new Node<T>(data);
@@ -93,6 +113,12 @@ class LinkedList {
         tail_->prev = node;
     }
 
+    /**
+     * @brief Вставка перед определённым элементом
+     * @param reference Указатель на элемент, перед которого необходимо вставить новый элемент
+     * @param data Данные для добавления
+     * @return Истина, если удалось добавить элемент, ложь, если не удалось
+     */
     bool InsertBefore(Node<T> *reference, T &data) {
         if (IsEmpty()) {
             return false;
@@ -126,6 +152,12 @@ class LinkedList {
         return true;
     }
 
+    /**
+     * @brief Вставка после определённого элемента
+     * @param reference Указатель на элемент, после которого необходимо вставить новый элемент
+     * @param data Данные для добавления
+     * @return Истина, если удалось добавить элемент, ложь, если не удалось
+     */
     bool InsertAfter(Node<T> *reference, T &data) {
         if (IsEmpty()) {
             return false;
@@ -159,6 +191,11 @@ class LinkedList {
         return true;
     }
 
+    /**
+     * @brief Удаление элемента с определёнными данными
+     * @param data Данные для проверки
+     * @return Истина, если удалось удалить элемент, ложь, если не удалось
+     */
     bool DeleteNodeByContent(T &data) {
         if (IsEmpty()) {
             return false;
@@ -177,6 +214,11 @@ class LinkedList {
         return DeleteNode(node);
     }
 
+    /**
+     * @brief Удаление определённого элемента
+     * @param reference Указатель на удаляемый элемент
+     * @return Истина, если удалось удалить элемент, ложь, если не удалось
+     */
     bool DeleteNode(Node<T> *reference) {
         if (IsEmpty()) {
             return false;
@@ -216,6 +258,9 @@ class LinkedList {
         return true;
     }
 
+    /**
+     * @brief Удаление всего списка
+     */
     void DeleteList() {
         while (tail_->prev != nullptr) {
             Node<T> *node_to_delete = tail_->prev;
@@ -223,6 +268,11 @@ class LinkedList {
         }
     }
 
+    /**
+     * @brief Получение элемента по его индексу в списке
+     * @param index Индекс элемента
+     * @return Истина, если удалось найти элемент, ложь, если не удалось
+     */
     T *GetNodeDataByIndex(int index) const {
         auto *list = GetIteratorAtHead();
         auto *node = list->StepForward();
@@ -244,16 +294,29 @@ class LinkedList {
         return &node->data;
     }
 
+    /**
+     * @brief Получение указателя на итератор с начала списка
+     * @return Указатель на итератор с начала списка
+     */
     Iterator<T> *GetIteratorAtHead() const {
         auto *iterator = new Iterator<T>(head_);
         return iterator;
     }
 
+    /**
+     * @brief Получение указателя на итератор с конца списка
+     * @return Указатель на итератор с конца списка
+     */
     Iterator<T> *GetIteratorAtTail() const {
         auto *iterator = new Iterator<T>(tail_);
         return iterator;
     }
 
+    /**
+     * @brief Оператор копирования
+     * @param linked_list Список для копирования
+     * @return Новый список
+     */
     LinkedList<T> &operator=(const LinkedList<T> &linked_list) {
         if (this == &linked_list) {
             return *this;
@@ -269,7 +332,14 @@ class LinkedList {
     }
 
   private:
+    /**
+     * @brief Указатель на указатель на первый элемент в списке
+     */
     Node<T> *head_;
+
+    /**
+     * @brief Указатель на указатель на последний элемент в списке
+     */
     Node<T> *tail_;
 };
 

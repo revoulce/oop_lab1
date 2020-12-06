@@ -18,11 +18,27 @@ int Library::GetNumberOfBooks() const {
 }
 
 bool Library::RemoveBook(Book &book) {
+    if (book.GetIsIssued()) {
+        return false;
+    }
+
     return books_->DeleteNodeByContent(book);
 }
 
-void Library::RemoveBooks() {
+bool Library::RemoveBooks() {
+    auto *books = books_->GetIteratorAtHead();
+    auto *book = books->StepForward();
+
+    while (book != nullptr) {
+        if (book->data.GetIsIssued()) {
+            return false;
+        }
+
+        book = books->StepForward();
+    }
+
     books_->DeleteList();
+    return true;
 }
 
 int Library::GetNumberOfReaders() const {
@@ -37,8 +53,20 @@ bool Library::RemoveReader(Reader &reader) {
     return readers_->DeleteNodeByContent(reader);
 }
 
-void Library::RemoveReaders() {
+bool Library::RemoveReaders() {
+    auto *readers = readers_->GetIteratorAtHead();
+    auto *reader = readers->StepForward();
+
+    while (reader != nullptr) {
+        if (reader->data.GetBid() != 0) {
+            return false;
+        }
+
+        reader = readers->StepForward();
+    }
+
     readers_->DeleteList();
+    return true;
 }
 
 void Library::AddBook(Book &book) {
