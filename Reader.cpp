@@ -18,11 +18,11 @@ void Reader::SetBid(int bid) {
     bid_ = bid;
 }
 
-bool Reader::operator==(const Reader &reader) {
+bool Reader::operator==(const Reader& reader) {
     return ((rid_ == reader.rid_) && (bid_ == reader.bid_));
 }
 
-std::ostream &operator<<(std::ostream &os, const Reader &reader) {
+std::ostream& operator<<(std::ostream& os, const Reader& reader) {
     os << "RID: " << reader.rid_;
     os << ", BID: " << reader.bid_;
     return os;

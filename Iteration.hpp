@@ -19,7 +19,7 @@ class Iterator {
      * @brief Создаёт итератор для прохождения по списку
      * @param nodes Указатель на один из элементов списка, который будет итерироваться
      */
-    explicit Iterator(Node<T> *nodes = nullptr) : nodes_(nodes) {}
+    explicit Iterator(Node<T>* nodes = nullptr) : nodes_(nodes) {}
 
     ~Iterator() {
         if (nodes_ == nullptr) {
@@ -31,7 +31,7 @@ class Iterator {
      * @brief Сделать шаг вперед в списке
      * @return Указатель на следующий элемент списка или nullptr, если список пуст
      */
-    Node<T> *StepForward() {
+    Node<T>* StepForward() {
         if (nodes_ == nullptr) {
             return nullptr;
         }
@@ -57,7 +57,7 @@ class Iterator {
     /**
      * @brief Указатель на текущий элемент в списке
      */
-    Node<T> *nodes_;
+    Node<T>* nodes_;
 };
 
 #endif//OOP_LAB1__ITERATION_HPP_

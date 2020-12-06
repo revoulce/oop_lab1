@@ -20,15 +20,15 @@ class LinkedList {
      * @brief Конструктор копирования
      * @param other_list Список для копирования
      */
-    LinkedList(const LinkedList<T> &other_list) {
+    LinkedList(const LinkedList<T>& other_list) {
         if (other_list.IsEmpty()) {
             head_ = new Node<T>();
             tail_ = new Node<T>();
             return;
         }
 
-        auto *list = other_list.GetIteratorAtHead();
-        auto *node = list->StepForward();
+        auto* list = other_list.GetIteratorAtHead();
+        auto* node = list->StepForward();
 
         head_ = new Node<T>();
         tail_ = new Node<T>();
@@ -66,7 +66,7 @@ class LinkedList {
             return 0;
         }
 
-        Node<T> *node = tail_;
+        Node<T>* node = tail_;
         auto count = 0;
 
         while (node != nullptr) {
@@ -81,16 +81,16 @@ class LinkedList {
      * @brief Добавление элемента в конец списка
      * @param data Данные для добавления
      */
-    void PushFront(T &data) {
+    void PushFront(T& data) {
         if (IsEmpty()) {
-            Node<T> *node = new Node<T>(data);
+            Node<T>* node = new Node<T>(data);
             head_->next = node;
             tail_->prev = node;
             return;
         }
 
-        Node<T> *first = head_->next;
-        Node<T> *node = new Node<T>(data, first);
+        Node<T>* first = head_->next;
+        Node<T>* node = new Node<T>(data, first);
         first->prev = node;
         head_->prev = node;
     }
@@ -99,16 +99,16 @@ class LinkedList {
      * @brief Добавление элемента в начало списка
      * @param data Данные для добавления
      */
-    void PushBack(T &data) {
+    void PushBack(T& data) {
         if (IsEmpty()) {
-            auto *node = new Node<T>(data);
+            auto* node = new Node<T>(data);
             head_->next = node;
             tail_->prev = node;
             return;
         }
 
-        Node<T> *last = tail_->prev;
-        auto *node = new Node<T>(data, nullptr, last);
+        Node<T>* last = tail_->prev;
+        auto* node = new Node<T>(data, nullptr, last);
         last->next = node;
         tail_->prev = node;
     }
@@ -119,12 +119,12 @@ class LinkedList {
      * @param data Данные для добавления
      * @return Истина, если удалось добавить элемент, ложь, если не удалось
      */
-    bool InsertBefore(Node<T> *reference, T &data) {
+    bool InsertBefore(Node<T>* reference, T& data) {
         if (IsEmpty()) {
             return false;
         }
 
-        Node<T> *search_reference = head_->next;
+        Node<T>* search_reference = head_->next;
 
         while (search_reference != nullptr) {
             if (search_reference == reference) {
@@ -138,8 +138,8 @@ class LinkedList {
             return false;
         }
 
-        Node<T> *before_preference = search_reference->prev;
-        auto *node = new Node<T>(data, search_reference, before_preference);
+        Node<T>* before_preference = search_reference->prev;
+        auto* node = new Node<T>(data, search_reference, before_preference);
 
         if (before_preference == nullptr) {
             head_->next = node;
@@ -158,12 +158,12 @@ class LinkedList {
      * @param data Данные для добавления
      * @return Истина, если удалось добавить элемент, ложь, если не удалось
      */
-    bool InsertAfter(Node<T> *reference, T &data) {
+    bool InsertAfter(Node<T>* reference, T& data) {
         if (IsEmpty()) {
             return false;
         }
 
-        Node<T> *search_reference = head_->next;
+        Node<T>* search_reference = head_->next;
 
         while (search_reference != nullptr) {
             if (search_reference == reference) {
@@ -177,8 +177,8 @@ class LinkedList {
             return false;
         }
 
-        Node<T> *after_preference = search_reference->next;
-        auto *node = new Node<T>(data, after_preference, search_reference);
+        Node<T>* after_preference = search_reference->next;
+        auto* node = new Node<T>(data, after_preference, search_reference);
 
         if (after_preference == nullptr) {
             tail_->prev = node;
@@ -196,12 +196,12 @@ class LinkedList {
      * @param data Данные для проверки
      * @return Истина, если удалось удалить элемент, ложь, если не удалось
      */
-    bool DeleteNodeByContent(T &data) {
+    bool DeleteNodeByContent(T& data) {
         if (IsEmpty()) {
             return false;
         }
 
-        auto *node = head_->next;
+        auto* node = head_->next;
 
         while (node != nullptr) {
             if (node->data == data) {
@@ -219,12 +219,12 @@ class LinkedList {
      * @param reference Указатель на удаляемый элемент
      * @return Истина, если удалось удалить элемент, ложь, если не удалось
      */
-    bool DeleteNode(Node<T> *reference) {
+    bool DeleteNode(Node<T>* reference) {
         if (IsEmpty()) {
             return false;
         }
 
-        Node<T> *node_to_delete = tail_->prev;
+        Node<T>* node_to_delete = tail_->prev;
 
         while (node_to_delete != nullptr) {
             if (node_to_delete == reference) {
@@ -238,8 +238,8 @@ class LinkedList {
             return false;
         }
 
-        Node<T> *after_delete = node_to_delete->next;
-        Node<T> *before_delete = node_to_delete->prev;
+        Node<T>* after_delete = node_to_delete->next;
+        Node<T>* before_delete = node_to_delete->prev;
 
         if (after_delete == nullptr) {
             tail_->prev = before_delete;
@@ -263,7 +263,7 @@ class LinkedList {
      */
     void DeleteList() {
         while (tail_->prev != nullptr) {
-            Node<T> *node_to_delete = tail_->prev;
+            Node<T>* node_to_delete = tail_->prev;
             DeleteNode(node_to_delete);
         }
     }
@@ -273,9 +273,9 @@ class LinkedList {
      * @param index Индекс элемента
      * @return Истина, если удалось найти элемент, ложь, если не удалось
      */
-    T *GetNodeDataByIndex(int index) const {
-        auto *list = GetIteratorAtHead();
-        auto *node = list->StepForward();
+    T* GetNodeDataByIndex(int index) const {
+        auto* list = GetIteratorAtHead();
+        auto* node = list->StepForward();
         int count = 0;
 
         while (node != nullptr) {
@@ -298,8 +298,8 @@ class LinkedList {
      * @brief Получение указателя на итератор с начала списка
      * @return Указатель на итератор с начала списка
      */
-    Iterator<T> *GetIteratorAtHead() const {
-        auto *iterator = new Iterator<T>(head_);
+    Iterator<T>* GetIteratorAtHead() const {
+        auto* iterator = new Iterator<T>(head_);
         return iterator;
     }
 
@@ -307,8 +307,8 @@ class LinkedList {
      * @brief Получение указателя на итератор с конца списка
      * @return Указатель на итератор с конца списка
      */
-    Iterator<T> *GetIteratorAtTail() const {
-        auto *iterator = new Iterator<T>(tail_);
+    Iterator<T>* GetIteratorAtTail() const {
+        auto* iterator = new Iterator<T>(tail_);
         return iterator;
     }
 
@@ -317,7 +317,7 @@ class LinkedList {
      * @param linked_list Список для копирования
      * @return Новый список
      */
-    LinkedList<T> &operator=(const LinkedList<T> &linked_list) {
+    LinkedList<T>& operator=(const LinkedList<T>& linked_list) {
         if (this == &linked_list) {
             return *this;
         }
@@ -335,12 +335,12 @@ class LinkedList {
     /**
      * @brief Указатель на указатель на первый элемент в списке
      */
-    Node<T> *head_;
+    Node<T>* head_;
 
     /**
      * @brief Указатель на указатель на последний элемент в списке
      */
-    Node<T> *tail_;
+    Node<T>* tail_;
 };
 
 #endif//OOP_LAB1__LINKEDLIST_HPP_

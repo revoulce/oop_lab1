@@ -9,7 +9,7 @@ void Console::Run() {
 
     try {
         UserInteraction();
-    } catch (std::exception &e) {
+    } catch (std::exception& e) {
         std::cerr << "Ошибка: " << e.what();
         WaitForAnyKey();
     }
@@ -32,8 +32,8 @@ void Console::ReadFiles() {
         const int parameters_count = 5;
         std::string parameters[parameters_count];
 
-        auto *books = new LinkedList<Book>();
-        auto *readers = new LinkedList<Reader>();
+        auto* books = new LinkedList<Book>();
+        auto* readers = new LinkedList<Reader>();
 
         std::getline(books_file, line);
         int books_count = std::stoi(line);
@@ -45,19 +45,19 @@ void Console::ReadFiles() {
             std::getline(books_file, line);
             std::stringstream ss(line);
 
-            for (auto &parameter : parameters) {
+            for (auto& parameter : parameters) {
                 std::getline(ss, token, delimiter);
                 parameter = token;
             }
 
-            auto *book = new Book(parameters);
+            auto* book = new Book(parameters);
             books->PushBack(*book);
         }
 
         for (int i = 0; i < readers_count; ++i) {
             std::getline(readers_file, line);
             rid = std::stoi(line);
-            auto *reader = new Reader(rid);
+            auto* reader = new Reader(rid);
             readers->PushBack(*reader);
         }
 
@@ -65,11 +65,11 @@ void Console::ReadFiles() {
 
         books_file.close();
         readers_file.close();
-    } catch (std::ifstream::failure &e) {
+    } catch (std::ifstream::failure& e) {
         std::cerr << "Произошла ошибка при открытии/чтении/закрытии файла" << std::endl;
         std::cerr << "Error message: " << e.what() << std::endl;
         WaitForAnyKey();
-    } catch (std::invalid_argument &e) {
+    } catch (std::invalid_argument& e) {
         std::cerr
             << "Были обнаружены буквы вместо цифр. Пожалуйста проверьте данные в файлах и повторно запустите программу."
             << std::endl;
@@ -99,7 +99,7 @@ void Console::UserInteraction() {
                 WaitForAnyKey();
                 continue;
             }
-        } catch (std::out_of_range &e) {
+        } catch (std::out_of_range& e) {
             std::cerr << "Введено слишком большое число." << std::endl;
             WaitForAnyKey();
             continue;
@@ -143,7 +143,12 @@ void Console::UserInteraction() {
                 break;
             case 8:
                 ClearScreen();
-                ReturnABook();
+                ReturnBook();
+                break;
+            case 9:
+                ClearScreen();
+                FindBook();
+                WaitForAnyKey();
                 break;
             default:
                 std::cerr << "Был введён неверный номер." << std::endl;
@@ -152,11 +157,11 @@ void Console::UserInteraction() {
     }
 }
 
-bool Console::CheckIsNumeric(std::string &string_to_check) {
+bool Console::CheckIsNumeric(std::string& string_to_check) {
     return std::ranges::all_of(string_to_check, [](char ch) { return std::isdigit(ch) != 0; });
 }
 
-bool Console::CheckUserWish(std::string &string_to_output) {
+bool Console::CheckUserWish(std::string& string_to_output) {
     std::string user_input;
 
     std::cout << string_to_output << std::endl << "> ";
@@ -178,10 +183,10 @@ bool Console::DoesLibraryExist() {
             << "Библиотека не была создана. Проверьте наличие файлов в той же папке, что и программа, а так же их правильность."
             << std::endl;
         WaitForAnyKey();
-        return true;
+        return false;
     }
 
-    return false;
+    return true;
 }
 
 void Console::PrintMenu() {
@@ -195,15 +200,16 @@ void Console::PrintMenu() {
     std::cout << "6. Удалить читателя/читателей." << std::endl;
     std::cout << "7. Выдать книгу/книги." << std::endl;
     std::cout << "8. Вернуть книгу/книги." << std::endl;
+    std::cout << "9. Проверить выдачу книги." << std::endl;
 }
 
 void Console::PrintBooks() {
-    if (DoesLibraryExist()) {
+    if (!DoesLibraryExist()) {
         return;
     }
 
-    auto *books = library_->GetBooks()->GetIteratorAtHead();
-    auto *book = books->StepForward();
+    auto* books = library_->GetBooks()->GetIteratorAtHead();
+    auto* book = books->StepForward();
     int i = 1;
 
     if (book == nullptr) {
@@ -219,12 +225,12 @@ void Console::PrintBooks() {
 }
 
 void Console::PrintReaders() {
-    if (DoesLibraryExist()) {
+    if (!DoesLibraryExist()) {
         return;
     }
 
-    auto *readers = library_->GetReaders()->GetIteratorAtHead();
-    auto *reader = readers->StepForward();
+    auto* readers = library_->GetReaders()->GetIteratorAtHead();
+    auto* reader = readers->StepForward();
     auto i = 1;
 
     if (reader == nullptr) {
@@ -239,7 +245,7 @@ void Console::PrintReaders() {
     }
 }
 
-Book *Console::InputBook() {
+Book* Console::InputBook() {
     const auto parameters_count = 5;
     std::string parameters[parameters_count];
     std::string author, title, year, publisher, bid;
@@ -309,12 +315,12 @@ Book *Console::InputBook() {
         std::cout << "Попробуйте снова -- в вводе были ошибки." << std::endl;
     }
 
-    Book *book = new Book(parameters);
+    Book* book = new Book(parameters);
 
     return book;
 }
 
-Reader *Console::InputReader() {
+Reader* Console::InputReader() {
     std::string rid;
 
     while (true) {
@@ -328,20 +334,20 @@ Reader *Console::InputReader() {
         std::cout << "Попробуйте снова -- в вводе были ошибки." << std::endl;
     }
 
-    auto *reader = new Reader(std::stoi(rid));
+    auto* reader = new Reader(std::stoi(rid));
 
     return reader;
 }
 
 void Console::AddBooks() {
-    if (DoesLibraryExist()) {
+    if (!DoesLibraryExist()) {
         return;
     }
 
     std::string string_to_check_a_wish = "Вы уверены что хотите добавить новую книгу? Y/n";
 
     while (CheckUserWish(string_to_check_a_wish)) {
-        auto *book = InputBook();
+        auto* book = InputBook();
         library_->AddBook(*book);
         ClearScreen();
         std::cout << "Успех! Книга была добавлена в список." << std::endl << std::endl;
@@ -349,14 +355,14 @@ void Console::AddBooks() {
 }
 
 void Console::AddReaders() {
-    if (DoesLibraryExist()) {
+    if (!DoesLibraryExist()) {
         return;
     }
 
     std::string string_to_check_a_wish = "Вы уверены что хотите добавить нового читателя? Y/n";
 
     while (CheckUserWish(string_to_check_a_wish)) {
-        auto *reader = InputReader();
+        auto* reader = InputReader();
         library_->AddReader(*reader);
         ClearScreen();
         std::cout << "Успех! Читатель был добавлен в список." << std::endl << std::endl;
@@ -364,7 +370,7 @@ void Console::AddReaders() {
 }
 
 void Console::DeleteBooks() {
-    if (DoesLibraryExist()) {
+    if (!DoesLibraryExist()) {
         return;
     }
 
@@ -382,7 +388,7 @@ void Console::DeleteBooks() {
     }
 
     while (CheckUserWish(string_to_check_a_wish)) {
-        auto *find_book = ChooseBook();
+        auto* find_book = ChooseBook();
 
         if (find_book != nullptr) {
             ClearScreen();
@@ -399,7 +405,7 @@ void Console::DeleteBooks() {
 }
 
 void Console::DeleteReaders() {
-    if (DoesLibraryExist()) {
+    if (!DoesLibraryExist()) {
         return;
     }
 
@@ -417,7 +423,7 @@ void Console::DeleteReaders() {
     }
 
     while (CheckUserWish(string_to_check_a_wish)) {
-        auto *find_reader = ChooseReader();
+        auto* find_reader = ChooseReader();
 
         if (find_reader != nullptr) {
             ClearScreen();
@@ -433,7 +439,7 @@ void Console::DeleteReaders() {
     }
 }
 
-Book *Console::ChooseBook() {
+Book* Console::ChooseBook() {
     std::string string_to_choose_a_method =
         "Вы хотите ввести ID книги? Если нет, то Вам будет предложено выбрать из списка. Y/n";
     std::string user_input;
@@ -449,7 +455,7 @@ Book *Console::ChooseBook() {
             return nullptr;
         }
 
-        auto *find_book = library_->FindBook(std::stoi(user_input));
+        auto* find_book = library_->FindBook(std::stoi(user_input));
 
         if (find_book == nullptr) {
             std::cerr << "Книга не была найдена -- попробуйте снова с другими данными." << std::endl;
@@ -478,7 +484,7 @@ Book *Console::ChooseBook() {
             return nullptr;
         }
 
-        auto *find_book_by_index = library_->FindBookByIndex(user_input_int - 1);
+        auto* find_book_by_index = library_->FindBookByIndex(user_input_int - 1);
 
         if (find_book_by_index == nullptr) {
             std::cerr << "Книга не была найдена -- попробуйте снова с другими данными." << std::endl;
@@ -490,7 +496,7 @@ Book *Console::ChooseBook() {
     }
 }
 
-Reader *Console::ChooseReader() {
+Reader* Console::ChooseReader() {
     std::string string_to_choose_a_method =
         "Вы хотите ввести ID читателя? Если нет, то Вам будет предложено выбрать из списка. Y/n";
     std::string user_input;
@@ -506,7 +512,7 @@ Reader *Console::ChooseReader() {
             return nullptr;
         }
 
-        auto *find_reader = library_->FindReader(std::stoi(user_input));
+        auto* find_reader = library_->FindReader(std::stoi(user_input));
 
         if (find_reader == nullptr) {
             std::cerr << "Читатель не был найден -- попробуйте снова с другими данными." << std::endl;
@@ -535,7 +541,7 @@ Reader *Console::ChooseReader() {
             return nullptr;
         }
 
-        auto *find_reader_by_index = library_->FindReaderByIndex(user_input_int - 1);
+        auto* find_reader_by_index = library_->FindReaderByIndex(user_input_int - 1);
 
         if (find_reader_by_index == nullptr) {
             std::cerr << "Читатель не был найден -- попробуйте снова с другими данными." << std::endl;
@@ -548,45 +554,72 @@ Reader *Console::ChooseReader() {
 }
 
 void Console::IssueBook() {
-    if (DoesLibraryExist()) {
+    if (!DoesLibraryExist()) {
         return;
     }
 
     std::string string_to_check_a_wish = "Вы уверены что хотите выдать книгу? Y/n";
 
     while (CheckUserWish(string_to_check_a_wish)) {
-        auto *book = ChooseBook();
-        auto *reader = ChooseReader();
+        auto* book = ChooseBook();
 
-        ClearScreen();
+        if (book != nullptr) {
+            auto* reader = ChooseReader();
 
-        if (library_->IssueBook(book->GetBid(), reader->GetRid())) {
-            std::cout << "Успех!" << std::endl;
-        } else {
-            std::cout << "Провал!" << std::endl;
+            if (reader != nullptr) {
+                ClearScreen();
+
+                if (library_->IssueBook(book->GetBid(), reader->GetRid())) {
+                    std::cout << "Успех!" << std::endl;
+                } else {
+                    std::cout << "Провал!" << std::endl;
+                }
+            }
         }
     }
 }
 
-void Console::ReturnABook() {
-    if (DoesLibraryExist()) {
+void Console::ReturnBook() {
+    if (!DoesLibraryExist()) {
         return;
     }
 
     std::string string_to_check_a_wish = "Вы уверены что хотите вернуть книгу? Y/n";
 
     while (CheckUserWish(string_to_check_a_wish)) {
-        auto *book = ChooseBook();
-        auto *reader = ChooseReader();
+        auto* reader = ChooseReader();
 
-        ClearScreen();
+        if (reader != nullptr) {
+            auto* book = library_->FindBook(reader->GetBid());
 
-        if (library_->ReturnBook(book->GetBid(), reader->GetRid())) {
-            std::cout << "Успех!" << std::endl;
-        } else {
-            std::cout << "Провал!" << std::endl;
+            if (book != nullptr) {
+                ClearScreen();
+
+                if (library_->ReturnBook(book->GetBid(), reader->GetRid())) {
+                    std::cout << "Успех!" << std::endl;
+                } else {
+                    std::cout << "Провал!" << std::endl;
+                }
+            }
         }
     }
+}
+
+void Console::FindBook() {
+    if (!DoesLibraryExist()) {
+        return;
+    }
+
+    auto* find_book = ChooseBook();
+
+    if (!find_book->GetIsIssued()) {
+        std::cout << "Книга никому не выдана." << std::endl;
+        return;
+    }
+
+    auto* find_reader = library_->FindIssuedBook(find_book->GetBid());
+
+    std::cout << "Книга " << find_book->GetBid() << " выдана " << find_reader->GetRid() << std::endl;
 }
 
 void Console::ClearScreen() {
@@ -617,7 +650,7 @@ void Console::ClearScreen() {
     SetConsoleCursorPosition(handle, home_coords);
 }
 
-void Console::WaitForAnyKey(const TCHAR *prompt) {
+void Console::WaitForAnyKey(const TCHAR* prompt) {
     TCHAR tchar;
     DWORD mode;
     DWORD count;

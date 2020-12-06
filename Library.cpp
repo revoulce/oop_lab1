@@ -4,12 +4,12 @@
 
 #include "Library.hpp"
 
-Library::Library(LinkedList<Book> &books, LinkedList<Reader> &readers) {
+Library::Library(LinkedList<Book>& books, LinkedList<Reader>& readers) {
     books_ = new LinkedList<Book>(books);
     readers_ = new LinkedList<Reader>(readers);
 }
 
-LinkedList<Book> *Library::GetBooks() const {
+LinkedList<Book>* Library::GetBooks() const {
     return books_;
 }
 
@@ -17,7 +17,7 @@ int Library::GetNumberOfBooks() const {
     return books_->Size();
 }
 
-bool Library::RemoveBook(Book &book) {
+bool Library::RemoveBook(Book& book) {
     if (book.GetIsIssued()) {
         return false;
     }
@@ -26,8 +26,8 @@ bool Library::RemoveBook(Book &book) {
 }
 
 bool Library::RemoveBooks() {
-    auto *books = books_->GetIteratorAtHead();
-    auto *book = books->StepForward();
+    auto* books = books_->GetIteratorAtHead();
+    auto* book = books->StepForward();
 
     while (book != nullptr) {
         if (book->data.GetIsIssued()) {
@@ -45,17 +45,17 @@ int Library::GetNumberOfReaders() const {
     return readers_->Size();
 }
 
-LinkedList<Reader> *Library::GetReaders() const {
+LinkedList<Reader>* Library::GetReaders() const {
     return readers_;
 }
 
-bool Library::RemoveReader(Reader &reader) {
+bool Library::RemoveReader(Reader& reader) {
     return readers_->DeleteNodeByContent(reader);
 }
 
 bool Library::RemoveReaders() {
-    auto *readers = readers_->GetIteratorAtHead();
-    auto *reader = readers->StepForward();
+    auto* readers = readers_->GetIteratorAtHead();
+    auto* reader = readers->StepForward();
 
     while (reader != nullptr) {
         if (reader->data.GetBid() != 0) {
@@ -69,17 +69,17 @@ bool Library::RemoveReaders() {
     return true;
 }
 
-void Library::AddBook(Book &book) {
+void Library::AddBook(Book& book) {
     books_->PushBack(book);
 }
 
-void Library::AddReader(Reader &reader) {
+void Library::AddReader(Reader& reader) {
     readers_->PushBack(reader);
 }
 
 bool Library::IssueBook(int bid, int rid) {
-    auto *book = FindBook(bid);
-    auto *reader = FindReader(rid);
+    auto* book = FindBook(bid);
+    auto* reader = FindReader(rid);
 
     if (book == nullptr || reader == nullptr) {
         return false;
@@ -96,8 +96,8 @@ bool Library::IssueBook(int bid, int rid) {
 }
 
 bool Library::ReturnBook(int bid, int rid) {
-    auto *book = FindBook(bid);
-    auto *reader = FindReader(rid);
+    auto* book = FindBook(bid);
+    auto* reader = FindReader(rid);
 
     if (book == nullptr || reader == nullptr) {
         return false;
@@ -113,9 +113,9 @@ bool Library::ReturnBook(int bid, int rid) {
     return true;
 }
 
-Book *Library::FindBook(int bid) {
-    auto *books = books_->GetIteratorAtHead();
-    auto *book = books->StepForward();
+Book* Library::FindBook(int bid) {
+    auto* books = books_->GetIteratorAtHead();
+    auto* book = books->StepForward();
 
     while (book != nullptr) {
         if (book->data.GetBid() == bid) {
@@ -132,13 +132,13 @@ Book *Library::FindBook(int bid) {
     return &book->data;
 }
 
-Book *Library::FindBookByIndex(int index) {
+Book* Library::FindBookByIndex(int index) {
     return books_->GetNodeDataByIndex(index);
 }
 
-Reader *Library::FindReader(int rid) {
-    auto *readers = readers_->GetIteratorAtHead();
-    auto *reader = readers->StepForward();
+Reader* Library::FindReader(int rid) {
+    auto* readers = readers_->GetIteratorAtHead();
+    auto* reader = readers->StepForward();
 
     while (reader != nullptr) {
         if (reader->data.GetRid() == rid) {
@@ -155,11 +155,30 @@ Reader *Library::FindReader(int rid) {
     return &reader->data;
 }
 
-Reader *Library::FindReaderByIndex(int index) {
+Reader* Library::FindReaderByIndex(int index) {
     return readers_->GetNodeDataByIndex(index);
 }
 
-Library &Library::operator=(const Library &library) {
+Reader* Library::FindIssuedBook(int bid) {
+    auto* readers = readers_->GetIteratorAtHead();
+    auto* reader = readers->StepForward();
+
+    while (reader != nullptr) {
+        if (reader->data.GetBid() == bid) {
+            break;
+        }
+
+        reader = readers->StepForward();
+    }
+
+    if (reader == nullptr) {
+        return nullptr;
+    }
+
+    return &reader->data;
+}
+
+Library& Library::operator=(const Library& library) {
     if (this == &library) {
         return *this;
     }

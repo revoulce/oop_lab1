@@ -10,10 +10,10 @@ Book::Book() {
     is_issued_ = false;
 }
 
-Book::Book(std::string &author, std::string &title, std::string &publisher, int year, int bid, bool is_issued)
+Book::Book(std::string& author, std::string& title, std::string& publisher, int year, int bid, bool is_issued)
     : author_(author), title_(title), publisher_(publisher), year_(year), bid_(bid), is_issued_(is_issued) {}
 
-Book::Book(std::string *parameters) {
+Book::Book(std::string* parameters) {
     author_ = parameters[0];
     title_ = parameters[1];
     year_ = std::stoi(parameters[2]);
@@ -22,7 +22,7 @@ Book::Book(std::string *parameters) {
     is_issued_ = false;
 }
 
-Book::Book(const Book &other_book) {
+Book::Book(const Book& other_book) {
     author_ = other_book.author_;
     title_ = other_book.title_;
     year_ = other_book.year_;
@@ -43,7 +43,7 @@ void Book::SetIsIssued(bool is_issued) {
     is_issued_ = is_issued;
 }
 
-Book &Book::operator=(const Book &book) {
+Book& Book::operator=(const Book& book) {
     if (this == &book) {
         return *this;
     }
@@ -58,7 +58,7 @@ Book &Book::operator=(const Book &book) {
     return *this;
 }
 
-bool Book::operator==(const Book &book) {
+bool Book::operator==(const Book& book) {
     bool expression = title_ == book.title_;
     expression = expression && (title_ == book.title_);
     expression = expression && (year_ == book.year_);
@@ -69,7 +69,7 @@ bool Book::operator==(const Book &book) {
     return expression;
 }
 
-std::ostream &operator<<(std::ostream &os, const Book &book) {
+std::ostream& operator<<(std::ostream& os, const Book& book) {
     os << "Автор: " << book.author_ << std::endl;
     os << "Название: " << book.title_ << std::endl;
     os << "Год: " << book.year_ << std::endl;

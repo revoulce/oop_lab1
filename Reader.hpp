@@ -36,7 +36,7 @@ class Reader {
      * @param reader Читатель для сравнения
      * @return Истина, если равны, ложь, если не равны
      */
-    bool operator==(const Reader &reader);
+    bool operator==(const Reader& reader);
 
     /**
      * @brief Оператор вывода на экран
@@ -44,7 +44,7 @@ class Reader {
      * @param reader Книга для вывода
      * @return Поток с выводом
      */
-    friend std::ostream &operator<<(std::ostream &os, const Reader &reader);
+    friend std::ostream& operator<<(std::ostream& os, const Reader& reader);
 
   private:
     /**

@@ -16,16 +16,16 @@ template<class T> class Node {
     /**
      * @brief Указатель на следующий элемент
      */
-    Node *next;
+    Node* next;
 
     /**
      * @brief Указатель на предыдущий элемент
      */
-    Node *prev;
+    Node* prev;
 
-    Node(const T &data = T(), Node *next = nullptr, Node *prev = nullptr) : data(data), next(next), prev(prev) {}
+    Node(const T& data = T(), Node* next = nullptr, Node* prev = nullptr) : data(data), next(next), prev(prev) {}
 
-    Node(const Node &other_node) : data(other_node.data), next(other_node.next), prev(other_node.prev) {}
+    Node(const Node& other_node) : data(other_node.data), next(other_node.next), prev(other_node.prev) {}
 
     ~Node() = default;
 };

@@ -24,9 +24,9 @@ class Book {
      * @param bid ID книги
      * @param is_issued Книга выдана?
      */
-    Book(std::string &author,
-         std::string &title,
-         std::string &publisher,
+    Book(std::string& author,
+         std::string& title,
+         std::string& publisher,
          int year = 0,
          int bid = 0,
          bool is_issued = false);
@@ -41,7 +41,7 @@ class Book {
      * @brief Создание копии книги
      * @param other_book Книга, копия которой создаётся
      */
-    Book(const Book &other_book);
+    Book(const Book& other_book);
 
     ~Book() = default;
 
@@ -68,14 +68,14 @@ class Book {
      * @param book Книга, которая копируется
      * @return Копия объекта
      */
-    Book &operator=(const Book &book);
+    Book& operator=(const Book& book);
 
     /**
      * @brief Оператор равенства
      * @param book Книга для сравнения
      * @return Истина, если равны, ложь, если нет
      */
-    bool operator==(const Book &book);
+    bool operator==(const Book& book);
 
     /**
      * @brief Оператор вывода на экран
@@ -83,7 +83,7 @@ class Book {
      * @param book Книга для вывода
      * @return Поток с выводом
      */
-    friend std::ostream &operator<<(std::ostream &os, const Book &book);
+    friend std::ostream& operator<<(std::ostream& os, const Book& book);
 
   private:
     /**

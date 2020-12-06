@@ -21,7 +21,7 @@ class Library {
      * @param books Список книг
      * @param readers Список читателей
      */
-    Library(LinkedList<Book> &books, LinkedList<Reader> &readers);
+    Library(LinkedList<Book>& books, LinkedList<Reader>& readers);
 
     ~Library() = default;
 
@@ -35,14 +35,14 @@ class Library {
      * @brief Получение списка книг
      * @return Список книг
      */
-    [[nodiscard]] LinkedList<Book> *GetBooks() const;
+    [[nodiscard]] LinkedList<Book>* GetBooks() const;
 
     /**
      * @brief Удаление одной книги из списка, если книга не находится у читателя
      * @param book Книга, для сравнения с существующими и удаления совпадения
      * @return Истина, если не выдана, ложь, если была выдана
      */
-    bool RemoveBook(Book &book);
+    bool RemoveBook(Book& book);
 
     /**
      * @brief Удаление всего списка книг, если нет не возвращённых книг
@@ -60,14 +60,14 @@ class Library {
      * @brief Получение списка читателей
      * @return Список читателей
      */
-    [[nodiscard]] LinkedList<Reader> *GetReaders() const;
+    [[nodiscard]] LinkedList<Reader>* GetReaders() const;
 
     /**
      * @brief Удаление одного читателя из списка, если у него нет взятой книги
      * @param reader Читатель, для сравнения с существующими и удаления совпадения
      * @return Истина, если отсутствует взятая книга, ложь, если она у него есть
      */
-    bool RemoveReader(Reader &reader);
+    bool RemoveReader(Reader& reader);
 
     /**
      * @brief Удаление всего списка читателей, если ни у кого из них нет взятой книги
@@ -79,13 +79,13 @@ class Library {
      * @brief Добавление новой книги в список
      * @param book Новая книга
      */
-    void AddBook(Book &book);
+    void AddBook(Book& book);
 
     /**
      * @brief Добавление нового читателя в список
      * @param reader Новый читатель
      */
-    void AddReader(Reader &reader);
+    void AddReader(Reader& reader);
 
     /**
      * @brief Выдача книги читателю
@@ -108,46 +108,53 @@ class Library {
      * @param bid ID книги для поиска
      * @return Найденная книга или nullptr
      */
-    Book *FindBook(int bid);
+    Book* FindBook(int bid);
 
     /**
      * @brief Поиск книги по её индексу в списке
      * @param index Индекс книги
      * @return Найденная книга или nullptr
      */
-    Book *FindBookByIndex(int index);
+    Book* FindBookByIndex(int index);
 
     /**
      * @brief Поиск читателя по ID
      * @param rid ID читателя для поиска
      * @return Найденный читатель или nullptr
      */
-    Reader *FindReader(int rid);
+    Reader* FindReader(int rid);
 
     /**
      * @brief Поиск читателя по его индексу в списке
      * @param index Индекс читателя
      * @return Найденный читатель или nullptr
      */
-    Reader *FindReaderByIndex(int index);
+    Reader* FindReaderByIndex(int index);
+
+    /**
+     * @brief Поиск данной книги в списке читателей
+     * @param bid ID искомой книги
+     * @return Читатель, имеющий у себя эту книгу
+     */
+    Reader* FindIssuedBook(int bid);
 
     /**
      * @brief Оператор копирования
      * @param library Библиотека для копирования
      * @return Новая библиотека
      */
-    Library &operator=(const Library &library);
+    Library& operator=(const Library& library);
 
   private:
     /**
      * @brief Указатель на список книг
      */
-    LinkedList<Book> *books_;
+    LinkedList<Book>* books_;
 
     /**
      * @brief Указатель на список читатель
      */
-    LinkedList<Reader> *readers_;
+    LinkedList<Reader>* readers_;
 };
 
 #endif//OOP_LAB1__LIBRARY_HPP_

@@ -30,7 +30,7 @@ class Console {
     /**
      * @brief Указатель на библиотеку
      */
-    Library *library_;
+    Library* library_;
 
     /**
      * @brief Читает данные из фалов и создаёт на их основе библиотеку
@@ -47,14 +47,14 @@ class Console {
      * @param string_to_check Строка для проверки
      * @return Истина, если только цифры, ложь, если присутствуют и буквы
      */
-    bool CheckIsNumeric(std::string &string_to_check);
+    bool CheckIsNumeric(std::string& string_to_check);
 
     /**
      * @brief Запрашивает у пользователя подтверждение его действий и обрабатывает его ответ
      * @param string_to_output Строка запроса
      * @return Истина, если пользователь согласился, ложь, если отказался
      */
-    bool CheckUserWish(std::string &string_to_output = (std::string &) "Are you sure?");
+    bool CheckUserWish(std::string& string_to_output = (std::string&) "Are you sure?");
 
     /**
      * @brief Проверяет библиотеку на существование
@@ -72,13 +72,13 @@ class Console {
      * @brief Запрашивает у пользователя ввод книги
      * @return Указатель на созданную книгу
      */
-    Book *InputBook();
+    Book* InputBook();
 
     /**
      * @brief Запрашивает у пользователя ввод читателя
      * @return Указатель на созданного читателя
      */
-    Reader *InputReader();
+    Reader* InputReader();
 
     void AddBooks();
 
@@ -92,13 +92,13 @@ class Console {
      * @brief Позволяет пользователю выбрать книгу из списка или вручную ввести ID книги
      * @return Выбранную книгу
      */
-    Book *ChooseBook();
+    Book* ChooseBook();
 
     /**
      * @brief Позволяет пользователю выбрать читателя из списка или вручную ввести ID читателя
      * @return
      */
-    Reader *ChooseReader();
+    Reader* ChooseReader();
 
     /**
      * @brief Выдаёт книгу читателю
@@ -108,18 +108,23 @@ class Console {
     /**
      * @brief Возвращает книгу обратно в библиотеку
      */
-    void ReturnABook();
+    void ReturnBook();
+
+    /**
+     * @brief Поиск книги и вывод сообщения о её выдачи или нахождении в библиотеке
+     */
+    void FindBook();
 
     /**
      * @brief Очищает консоль от символов
      */
-    void ClearScreen();
+    static void ClearScreen();
 
     /**
      * @brief Ожидания нажатия от пользователя
      * @param prompt Строка для вывода для пользователя
      */
-    void WaitForAnyKey(const TCHAR *prompt = nullptr);
+    static void WaitForAnyKey(const TCHAR* prompt = nullptr);
 };
 
 #endif//OOP_LAB1__CONSOLE_HPP_
