@@ -5,7 +5,7 @@
 #pragma once
 #ifndef OOP_LAB1__LINKEDLIST_HPP_
 #define OOP_LAB1__LINKEDLIST_HPP_
-#include "Iteration.hpp"
+#include "Iterator.hpp"
 #include "Node.hpp"
 
 template<class T>

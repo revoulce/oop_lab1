@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#ifndef OOP_LAB1__ITERATION_HPP_
-#define OOP_LAB1__ITERATION_HPP_
+#ifndef OOP_LAB1__ITERATOR_HPP_
+#define OOP_LAB1__ITERATOR_HPP_
 #include <ostream>
 #include "Node.hpp"
 
@@ -60,4 +60,4 @@ class Iterator {
     Node<T>* nodes_;
 };
 
-#endif//OOP_LAB1__ITERATION_HPP_
+#endif//OOP_LAB1__ITERATOR_HPP_
